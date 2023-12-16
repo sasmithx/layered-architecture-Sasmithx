@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.Dao.CustomerDaoImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -92,6 +93,8 @@ public class PlaceOrderFormController {
 
             if (newValue != null) {
                 try {
+
+
                     /*Search Customer*/
                     Connection connection = DBConnection.getDbConnection().getConnection();
                     try {
