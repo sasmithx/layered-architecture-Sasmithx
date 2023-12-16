@@ -1,6 +1,8 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.Dao.CustomerDaoImpl;
 import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -67,13 +69,24 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
+           /* Connection connection = DBConnection.getDbConnection().getConnection();
             Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
+            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");*/
 
-            while (rst.next()) {
-                tblCustomers.getItems().add(new CustomerTM(rst.getString("id"), rst.getString("name"), rst.getString("address")));
+            CustomerDaoImpl customerDao = new CustomerDaoImpl();
+            ArrayList<CustomerDTO> allCustomer = customerDao.getAllCustomer();
+            for(CustomerDTO dto: allCustomer){
+                tblCustomers.getItems().add(
+                    new CustomerTM(
+                            dto.getId(),
+                            dto.getName(),
+                            dto.getAddress())
+                    );
             }
+
+           /* while (rst.next()) {
+                tblCustomers.getItems().add(new CustomerTM(rst.getString("id"), rst.getString("name"), rst.getString("address")));
+            }*/
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
@@ -142,12 +155,12 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                Connection connection = DBConnection.getDbConnection().getConnection();
-                PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer (id,name, address) VALUES (?,?,?)");
-                pstm.setString(1, id);
-                pstm.setString(2, name);
-                pstm.setString(3, address);
-                pstm.executeUpdate();
+
+                CustomerDaoImpl customerDao=new CustomerDaoImpl();
+
+                CustomerDTO dto = new CustomerDTO(id,name,address);
+
+                boolean isSaved=customerDao.saveCustomer(dto);
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -163,12 +176,17 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                Connection connection = DBConnection.getDbConnection().getConnection();
+                /*Connection connection = DBConnection.getDbConnection().getConnection();
                 PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
                 pstm.setString(1, name);
                 pstm.setString(2, address);
                 pstm.setString(3, id);
-                pstm.executeUpdate();
+                pstm.executeUpdate();*/
+
+                CustomerDaoImpl customerDao = new CustomerDaoImpl();
+                CustomerDTO dto= new CustomerDTO(name,address,id);
+                boolean isUpdate=customerDao.updateCustomer(dto);
+
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -200,10 +218,14 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            Connection connection = DBConnection.getDbConnection().getConnection();
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
             pstm.setString(1, id);
-            pstm.executeUpdate();
+            pstm.executeUpdate();*/
+
+            CustomerDaoImpl customerDao = new CustomerDaoImpl();
+            //CustomerDTO dto = new CustomerDTO(id);
+            boolean isDeleted = customerDao.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();

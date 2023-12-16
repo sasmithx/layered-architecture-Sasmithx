@@ -1,6 +1,8 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.Dao.ItemDaoImpl;
 import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -68,13 +70,15 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
+            ItemDaoImpl itemDao = new ItemDaoImpl();
+            itemDao.getAllItem();
             /*Get all items*/
-            Connection connection = DBConnection.getDbConnection().getConnection();
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
             Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-            while (rst.next()) {
+            ResultSet rst = stm.executeQuery("SELECT * FROM Item");*/
+           /* while (rst.next()) {
                 tblItems.getItems().add(new ItemTM(rst.getString("code"), rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand")));
-            }
+            }*/
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
@@ -130,10 +134,13 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            Connection connection = DBConnection.getDbConnection().getConnection();
+           /* Connection connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
             pstm.setString(1, code);
-            pstm.executeUpdate();
+            pstm.executeUpdate();*/
+
+            ItemDaoImpl dao = new ItemDaoImpl();
+            boolean isDeleted = dao.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -173,13 +180,17 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                Connection connection = DBConnection.getDbConnection().getConnection();
+               /* Connection connection = DBConnection.getDbConnection().getConnection();
                 PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
                 pstm.setString(1, code);
                 pstm.setString(2, description);
                 pstm.setBigDecimal(3, unitPrice);
                 pstm.setInt(4, qtyOnHand);
-                pstm.executeUpdate();
+                pstm.executeUpdate();*/
+
+                ItemDaoImpl itemDao = new ItemDaoImpl();
+                ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
+                boolean isSaved = itemDao.saveItem(dto);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
             } catch (SQLException e) {
@@ -194,13 +205,18 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                Connection connection = DBConnection.getDbConnection().getConnection();
+                /*Connection connection = DBConnection.getDbConnection().getConnection();
                 PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
                 pstm.setString(1, description);
                 pstm.setBigDecimal(2, unitPrice);
                 pstm.setInt(3, qtyOnHand);
                 pstm.setString(4, code);
-                pstm.executeUpdate();
+                pstm.executeUpdate();*/
+
+                ItemDaoImpl itemDao = new ItemDaoImpl();
+                ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
+                boolean isUpdated = itemDao.updateItem(dto);
+
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -228,10 +244,13 @@ public class ManageItemsFormController {
 
     private String generateNewId() {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
-            if (rst.next()) {
-                String id = rst.getString("code");
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
+            ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");*/
+            ItemDaoImpl dao = new ItemDaoImpl();
+            ResultSet resultSet = dao.generateId();
+
+            if (resultSet.next()) {
+                String id = resultSet.getString("code");
                 int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
                 return String.format("I00-%03d", newItemId);
             } else {
