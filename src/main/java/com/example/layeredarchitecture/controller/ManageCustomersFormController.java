@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.Dao.CustomerDao;
 import com.example.layeredarchitecture.Dao.CustomerDaoImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -38,6 +39,8 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
+    CustomerDao customerDao = new CustomerDaoImpl();
+
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -73,7 +76,7 @@ public class ManageCustomersFormController {
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT * FROM Customer");*/
 
-            CustomerDaoImpl customerDao = new CustomerDaoImpl();
+            //CustomerDaoImpl customerDao = new CustomerDaoImpl();
             ArrayList<CustomerDTO> allCustomer = customerDao.getAllCustomer();
             for(CustomerDTO dto: allCustomer){
                 tblCustomers.getItems().add(
@@ -156,7 +159,7 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
 
-                CustomerDaoImpl customerDao=new CustomerDaoImpl();
+                //CustomerDaoImpl customerDao=new CustomerDaoImpl();
 
                 CustomerDTO dto = new CustomerDTO(id,name,address);
 
@@ -183,7 +186,7 @@ public class ManageCustomersFormController {
                 pstm.setString(3, id);
                 pstm.executeUpdate();*/
 
-                CustomerDaoImpl customerDao = new CustomerDaoImpl();
+                //CustomerDaoImpl customerDao = new CustomerDaoImpl();
                 CustomerDTO dto= new CustomerDTO(name,address,id);
                 boolean isUpdate=customerDao.updateCustomer(dto);
 
@@ -223,8 +226,8 @@ public class ManageCustomersFormController {
             pstm.setString(1, id);
             pstm.executeUpdate();*/
 
-            CustomerDaoImpl customerDao = new CustomerDaoImpl();
-            //CustomerDTO dto = new CustomerDTO(id);
+            //CustomerDaoImpl customerDao = new CustomerDaoImpl();
+
             boolean isDeleted = customerDao.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());

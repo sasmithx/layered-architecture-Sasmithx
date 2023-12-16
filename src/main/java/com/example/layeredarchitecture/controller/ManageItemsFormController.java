@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.Dao.ItemDao;
 import com.example.layeredarchitecture.Dao.ItemDaoImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -24,8 +25,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 
-
-
 public class ManageItemsFormController {
     public AnchorPane root;
     public TextField txtCode;
@@ -36,6 +35,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
+    ItemDao dao = new ItemDaoImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -139,7 +139,7 @@ public class ManageItemsFormController {
             pstm.setString(1, code);
             pstm.executeUpdate();*/
 
-            ItemDaoImpl dao = new ItemDaoImpl();
+            //ItemDaoImpl dao = new ItemDaoImpl();
             boolean isDeleted = dao.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
