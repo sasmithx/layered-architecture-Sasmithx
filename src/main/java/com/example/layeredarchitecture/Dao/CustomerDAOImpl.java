@@ -50,4 +50,18 @@ public class CustomerDAOImpl implements CustomerDAO {
         pstm.setString(1, id);
         return pstm.executeUpdate()>0;
     }
+
+    @Override
+    public ResultSet generateNewId() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+        return rst;
+    }
+
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
+        pstm.setString(1, id);
+        return pstm.executeQuery().next();
+    }
 }
