@@ -1,5 +1,8 @@
 package com.example.layeredarchitecture.Dao;
 
-public interface OrderDAO {
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+public interface OrderDAO {
+    public ResultSet generateNewOrderId() throws SQLException, ClassNotFoundException;
 }
