@@ -1,7 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.Dao.CustomerDao;
-import com.example.layeredarchitecture.Dao.CustomerDaoImpl;
+import com.example.layeredarchitecture.Dao.CustomerDAO;
+import com.example.layeredarchitecture.Dao.CustomerDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
@@ -39,7 +39,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDao customerDao = new CustomerDaoImpl();
+    CustomerDAO customerDao = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));

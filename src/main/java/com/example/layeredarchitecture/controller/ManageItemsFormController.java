@@ -1,8 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.Dao.ItemDao;
-import com.example.layeredarchitecture.Dao.ItemDaoImpl;
-import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.Dao.ItemDAO;
+import com.example.layeredarchitecture.Dao.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
@@ -35,7 +34,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-    ItemDao dao = new ItemDaoImpl();
+    ItemDAO dao = new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -70,7 +69,7 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            ItemDaoImpl itemDao = new ItemDaoImpl();
+            ItemDAOImpl itemDao = new ItemDAOImpl();
             itemDao.getAllItem();
             /*Get all items*/
             /*Connection connection = DBConnection.getDbConnection().getConnection();
@@ -188,7 +187,7 @@ public class ManageItemsFormController {
                 pstm.setInt(4, qtyOnHand);
                 pstm.executeUpdate();*/
 
-                ItemDaoImpl itemDao = new ItemDaoImpl();
+                ItemDAOImpl itemDao = new ItemDAOImpl();
                 ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
                 boolean isSaved = itemDao.saveItem(dto);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
@@ -213,7 +212,7 @@ public class ManageItemsFormController {
                 pstm.setString(4, code);
                 pstm.executeUpdate();*/
 
-                ItemDaoImpl itemDao = new ItemDaoImpl();
+                ItemDAOImpl itemDao = new ItemDAOImpl();
                 ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
                 boolean isUpdated = itemDao.updateItem(dto);
 
@@ -240,7 +239,7 @@ public class ManageItemsFormController {
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
 
-        ItemDaoImpl dao = new ItemDaoImpl();
+        ItemDAOImpl dao = new ItemDAOImpl();
         return dao.existItem(code);
     }
 
@@ -249,7 +248,7 @@ public class ManageItemsFormController {
         try {
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");*/
-            ItemDaoImpl dao = new ItemDaoImpl();
+            ItemDAOImpl dao = new ItemDAOImpl();
             ResultSet resultSet = dao.generateId();
 
             if (resultSet.next()) {
