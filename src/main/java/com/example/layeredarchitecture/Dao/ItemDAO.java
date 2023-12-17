@@ -18,5 +18,5 @@ public interface ItemDAO {
 
      boolean existItem(String code) throws SQLException, ClassNotFoundException;
 
-     void findItem(String newItemCode) throws SQLException, ClassNotFoundException;
+     ItemDTO findItem(String newItemCode) throws SQLException, ClassNotFoundException;
 }
