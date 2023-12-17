@@ -212,7 +212,7 @@ public class ManageCustomersFormController {
         pstm.setString(1, id);
         return pstm.executeQuery().next();*/
 
-        return  customerDao.existCustomer(id);
+        return customerDao.existCustomer(id);
     }
 
 
