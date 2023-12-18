@@ -372,7 +372,7 @@ public class PlaceOrderFormController {
             for (OrderDetailDTO detail : orderDetails) {
                 isOrderDetailSaved = orderDetailDAO.save(orderId, detail);
 
-//                //Search & Update Item
+//                Search & Update Item
                 ItemDTO item = findItem(detail.getItemCode());
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
@@ -410,6 +410,4 @@ public class PlaceOrderFormController {
         }
         return null;
     }
-
-
 }
