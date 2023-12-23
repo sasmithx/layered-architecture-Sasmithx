@@ -1,24 +1,31 @@
 package com.example.layeredarchitecture.dao.custom;
 
-import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.dao.CrudDAO;
 import com.example.layeredarchitecture.model.ItemDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public interface ItemDAO {
+public interface ItemDAO extends CrudDAO<ItemDTO> {
 
-    ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException;
+    @Override
+    ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException;
 
-    boolean saveItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+    @Override
+    boolean save(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 
-    boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+    @Override
+    boolean update(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 
-    boolean exitItem(String code) throws SQLException, ClassNotFoundException;
+    @Override
+    boolean exist(String code) throws SQLException, ClassNotFoundException;
 
-    boolean deleteItem(String id) throws SQLException, ClassNotFoundException;
+    @Override
+    boolean delete(String id) throws SQLException, ClassNotFoundException;
 
+    @Override
     ResultSet generateNewId() throws SQLException, ClassNotFoundException;
 
-    ItemDTO findItem(String newItemCode) throws SQLException, ClassNotFoundException;
+    @Override
+    ItemDTO search(String newItemCode) throws SQLException, ClassNotFoundException;
 }

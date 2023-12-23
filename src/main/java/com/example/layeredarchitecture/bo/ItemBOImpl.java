@@ -8,40 +8,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemBoImpl implements ItemBO{
+public class ItemBOImpl implements ItemBO{
+
     ItemDAO itemDAO = new ItemDAOImpl();
+
     @Override
-    public ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException {
-        return itemDAO.loadAllItems();
+    public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
+        return itemDAO.getAll();
     }
 
     @Override
     public boolean saveItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        return itemDAO.saveItem(itemDTO);
+        return itemDAO.save(itemDTO);
     }
 
     @Override
     public boolean updateItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        return itemDAO.updateItem(itemDTO);
+        return itemDAO.update(itemDTO);
     }
 
     @Override
-    public boolean exitItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.exitItem(code);
+    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+        return itemDAO.exist(code);
     }
 
     @Override
     public boolean deleteItem(String id) throws SQLException, ClassNotFoundException {
-        return itemDAO.deleteItem(id);
+        return itemDAO.delete(id);
     }
 
     @Override
-    public ResultSet generateNewId() throws SQLException, ClassNotFoundException {
+    public ResultSet generateNewItemId() throws SQLException, ClassNotFoundException {
         return itemDAO.generateNewId();
-    }
-
-    @Override
-    public ItemDTO findItem(String newItemCode) throws SQLException, ClassNotFoundException {
-        return itemDAO.findItem(newItemCode);
     }
 }

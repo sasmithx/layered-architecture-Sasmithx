@@ -1,7 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.bo.ItemBO;
-import com.example.layeredarchitecture.bo.ItemBoImpl;
+import com.example.layeredarchitecture.bo.ItemBOImpl;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -39,8 +39,8 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    //ItemDAO itemDAO = new ItemDAOImpl(); //property injection
-    ItemBO itemBO = new ItemBoImpl();
+    //    ItemDAO itemDAO = new ItemDAOImpl(); //property injection
+    ItemBO itemBO = new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -77,7 +77,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ArrayList<ItemDTO> allItems = itemBO.loadAllItems();
+            ArrayList<ItemDTO> allItems = itemBO.getAllItem();
 
             for (ItemDTO itemDTO : allItems) {
                 tblItems.getItems().add(
@@ -255,7 +255,7 @@ public class ManageItemsFormController {
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
 
-        return itemBO.exitItem(code);
+        return itemBO.existItem(code);
     }
 
 
@@ -264,7 +264,7 @@ public class ManageItemsFormController {
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");*/
 
-            ResultSet resultSet = itemBO.generateNewId();
+            ResultSet resultSet = itemBO.generateNewItemId();
 
             if (resultSet.next()) {
                 String id = resultSet.getString("code");

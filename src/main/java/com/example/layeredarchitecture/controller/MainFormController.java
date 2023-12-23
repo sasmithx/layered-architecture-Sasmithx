@@ -124,9 +124,6 @@ public class MainFormController {
                     root = FXMLLoader.load(this.getClass().getResource("/com/example/layeredarchitecture/place-order-form.fxml"));
                     break;
                 case "imgViewOrders":
-                    /*root = null;
-                    break;*/
-
                     QueryDAOImpl queryDAO = new QueryDAOImpl();
                     List<CustomerOrderDTO> customerOrderDTOS = queryDAO.customerOrderDetails();
 
@@ -139,6 +136,7 @@ public class MainFormController {
                                 dto.getTotal(),"|\n",
                                 "+-------------+-----------------+------------------+--------------+");
                     }
+                    //root = null;
                     break;
             }
 

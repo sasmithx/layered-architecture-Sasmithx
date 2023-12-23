@@ -10,7 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface OrderBO {
+public interface PlaceOrderBO {
+
     boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
     CustomerDTO searchCustomer(String newValue) throws SQLException, ClassNotFoundException;
     ItemDTO searchItem(String newItemCode) throws SQLException, ClassNotFoundException;
@@ -19,4 +20,5 @@ public interface OrderBO {
     ResultSet generateNewOrderId() throws SQLException, ClassNotFoundException;
     ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
     ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
-    }
+}
+
