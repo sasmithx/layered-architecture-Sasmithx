@@ -13,6 +13,9 @@ public class OrderDTO  {
     private BigDecimal orderTotal;
 
     public OrderDTO() {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.customerId = customerId;
     }
 
     public OrderDTO(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal) {

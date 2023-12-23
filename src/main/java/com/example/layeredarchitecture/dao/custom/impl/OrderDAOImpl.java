@@ -18,7 +18,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void selectOrderId(String orderId) throws SQLException, ClassNotFoundException {
+    public String selectOrderId(String orderId) throws SQLException, ClassNotFoundException {
         /*Connection connection = TransactionConnection.setConnection();
 
         PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
@@ -29,6 +29,7 @@ public class OrderDAOImpl implements OrderDAO {
         }*/
         ResultSet resultSet = SQLUtil.execute("SELECT oid FROM `Orders` WHERE oid=?", orderId);
         resultSet.next();
+        return orderId;
     }
 
     @Override
