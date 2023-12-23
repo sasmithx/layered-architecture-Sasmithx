@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.CustomerBO;
+import com.example.layeredarchitecture.bo.CustomerBoImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -38,7 +40,8 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl(); //property injection
+    //CustomerDAO customerDAO = new CustomerDAOImpl();//property injection
+    CustomerBO customerBO = new CustomerBoImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -75,7 +78,7 @@ public class ManageCustomersFormController {
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT * FROM Customer");*/
 
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomer = customerBO.getAllCustomer();
 
             for (CustomerDTO dto : allCustomer) {
                 tblCustomers.getItems().add(
@@ -162,7 +165,7 @@ public class ManageCustomersFormController {
                 pstm.setString(3, address);
                 pstm.executeUpdate();*/
 
-                boolean isSaved = customerDAO.saveCustomer(new CustomerDTO(id, name, address));
+                boolean isSaved = customerBO.saveCustomer(new CustomerDTO(id, name, address));
 
                 if (isSaved) {
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -195,7 +198,7 @@ public class ManageCustomersFormController {
                 e.printStackTrace();
             }
 
-            boolean isUpdated = customerDAO.updateCustomer(new CustomerDTO(id, name, address));
+            boolean isUpdated = customerBO.updateCustomer(new CustomerDTO(id, name, address));
 
             if (isUpdated) {
                 CustomerTM selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
@@ -214,7 +217,7 @@ public class ManageCustomersFormController {
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);*/
 
-        return customerDAO.existCustomer(id);
+        return customerBO.existCustomer(id);
     }
 
     public void btnDelete_OnAction(ActionEvent actionEvent) {
@@ -228,7 +231,7 @@ public class ManageCustomersFormController {
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
             pstm.setString(1, id);
             pstm.executeUpdate();*/
-            boolean isDeleted = customerDAO.deleteCustomer(id);
+            boolean isDeleted = customerBO.deleteCustomer(id);
 
             if (isDeleted) {
                 tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -248,7 +251,7 @@ public class ManageCustomersFormController {
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");*/
 
-            ResultSet resultSet = customerDAO.generateNewId();
+            ResultSet resultSet = customerBO.generateNewId();
 
             if (resultSet.next()) {
                 String id = resultSet.getString("id");

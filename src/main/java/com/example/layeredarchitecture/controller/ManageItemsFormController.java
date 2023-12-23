@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.ItemBO;
+import com.example.layeredarchitecture.bo.ItemBoImpl;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -37,7 +39,8 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    ItemDAO itemDAO = new ItemDAOImpl(); //property injection
+    //ItemDAO itemDAO = new ItemDAOImpl(); //property injection
+    ItemBO itemBO = new ItemBoImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -74,7 +77,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ArrayList<ItemDTO> allItems = itemDAO.loadAllItems();
+            ArrayList<ItemDTO> allItems = itemBO.loadAllItems();
 
             for (ItemDTO itemDTO : allItems) {
                 tblItems.getItems().add(
@@ -148,7 +151,7 @@ public class ManageItemsFormController {
             pstm.setString(1, code);
             pstm.executeUpdate();*/
 
-            boolean isDeleted = itemDAO.deleteItem(code);
+            boolean isDeleted = itemBO.deleteItem(code);
 
             if (isDeleted) {
                 tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -199,7 +202,7 @@ public class ManageItemsFormController {
                 pstm.setInt(4, qtyOnHand);
                 pstm.executeUpdate();*/
 
-                boolean isSaved = itemDAO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                boolean isSaved = itemBO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 if (isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
@@ -225,7 +228,7 @@ public class ManageItemsFormController {
                 pstm.setString(4, code);
                 pstm.executeUpdate();*/
 
-                boolean isUpdated = itemDAO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                boolean isUpdated = itemBO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 if (isUpdated) {
                     ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -252,7 +255,7 @@ public class ManageItemsFormController {
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
 
-        return itemDAO.exitItem(code);
+        return itemBO.exitItem(code);
     }
 
 
@@ -261,7 +264,7 @@ public class ManageItemsFormController {
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");*/
 
-            ResultSet resultSet = itemDAO.generateNewId();
+            ResultSet resultSet = itemBO.generateNewId();
 
             if (resultSet.next()) {
                 String id = resultSet.getString("code");
