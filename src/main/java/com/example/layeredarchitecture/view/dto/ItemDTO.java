@@ -1,23 +1,24 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.view.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class OrderDetailTM{
+
+
+public class ItemDTO implements Serializable {
     private String code;
     private String description;
-    private int qty;
     private BigDecimal unitPrice;
-    private BigDecimal total;
+    private int qtyOnHand;
 
-    public OrderDetailTM() {
+    public ItemDTO() {
     }
 
-    public OrderDetailTM(String code, String description, int qty, BigDecimal unitPrice, BigDecimal total) {
+    public ItemDTO(String code, String description, BigDecimal unitPrice, int qtyOnHand) {
         this.code = code;
         this.description = description;
-        this.qty = qty;
         this.unitPrice = unitPrice;
-        this.total = total;
+        this.qtyOnHand = qtyOnHand;
     }
 
     public String getCode() {
@@ -36,14 +37,6 @@ public class OrderDetailTM{
         this.description = description;
     }
 
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
@@ -52,22 +45,21 @@ public class OrderDetailTM{
         this.unitPrice = unitPrice;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public int getQtyOnHand() {
+        return qtyOnHand;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setQtyOnHand(int qtyOnHand) {
+        this.qtyOnHand = qtyOnHand;
     }
 
     @Override
     public String toString() {
-        return "OrderDetailTM{" +
+        return "ItemTM{" +
                 "code='" + code + '\'' +
                 ", description='" + description + '\'' +
-                ", qty=" + qty +
                 ", unitPrice=" + unitPrice +
-                ", total=" + total +
+                ", qtyOnHand=" + qtyOnHand +
                 '}';
     }
 }

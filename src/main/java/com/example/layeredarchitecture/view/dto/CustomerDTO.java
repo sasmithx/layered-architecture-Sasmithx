@@ -1,15 +1,17 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.view.dto;
+
+import java.io.Serializable;
 
 
-public class CustomerTM implements Comparable<CustomerTM> {
+public class CustomerDTO implements Serializable {
     private String id;
     private String name;
     private String address;
 
-    public CustomerTM() {
+    public CustomerDTO() {
     }
 
-    public CustomerTM(String id, String name, String address) {
+    public CustomerDTO(String id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -41,16 +43,10 @@ public class CustomerTM implements Comparable<CustomerTM> {
 
     @Override
     public String toString() {
-        return "CustomerTM{" +
+        return "CustomerDTO{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 '}';
-    }
-
-
-    @Override
-    public int compareTo(CustomerTM o) {
-        return id.compareTo(o.getId());
     }
 }

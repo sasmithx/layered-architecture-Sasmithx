@@ -1,17 +1,18 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.view.entity;
 
 import java.math.BigDecimal;
 
-public class ItemTM  {
+public class Item {
+
     private String code;
     private String description;
     private BigDecimal unitPrice;
     private int qtyOnHand;
 
-    public ItemTM() {
+    public Item() {
     }
 
-    public ItemTM(String code, String description, BigDecimal unitPrice, int qtyOnHand) {
+    public Item(String code, String description, BigDecimal unitPrice, int qtyOnHand) {
         this.code = code;
         this.description = description;
         this.unitPrice = unitPrice;
@@ -48,15 +49,5 @@ public class ItemTM  {
 
     public void setQtyOnHand(int qtyOnHand) {
         this.qtyOnHand = qtyOnHand;
-    }
-
-    @Override
-    public String toString() {
-        return "ItemTM{" +
-                "code='" + code + '\'' +
-                ", description='" + description + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", qtyOnHand=" + qtyOnHand +
-                '}';
     }
 }

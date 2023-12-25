@@ -1,19 +1,20 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.view.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OrderTM  {
+public class Order {
+
     private String orderId;
     private LocalDate orderDate;
     private String customerId;
     private String customerName;
     private BigDecimal orderTotal;
 
-    public OrderTM() {
+    public Order() {
     }
 
-    public OrderTM(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal) {
+    public Order(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.customerId = customerId;
@@ -59,16 +60,5 @@ public class OrderTM  {
 
     public void setOrderTotal(BigDecimal orderTotal) {
         this.orderTotal = orderTotal;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderTM{" +
-                "orderId='" + orderId + '\'' +
-                ", orderDate=" + orderDate +
-                ", customerId='" + customerId + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", orderTotal=" + orderTotal +
-                '}';
     }
 }

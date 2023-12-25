@@ -1,15 +1,15 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.view.entity;
 
+public class Customer {
 
-public class CustomerTM implements Comparable<CustomerTM> {
     private String id;
     private String name;
     private String address;
 
-    public CustomerTM() {
+    public Customer() {
     }
 
-    public CustomerTM(String id, String name, String address) {
+    public Customer(String id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -37,20 +37,5 @@ public class CustomerTM implements Comparable<CustomerTM> {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "CustomerTM{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
-
-
-    @Override
-    public int compareTo(CustomerTM o) {
-        return id.compareTo(o.getId());
     }
 }
