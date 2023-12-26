@@ -6,7 +6,7 @@ module com.example.layeredarchitecture {
 
     opens lk.sasax.layeredarchitecture to javafx.fxml;
     opens lk.sasax.layeredarchitecture.controller to javafx.fxml;
-    opens lk.sasax.layeredarchitecture.tdm to javafx.base;
+    opens lk.sasax.layeredarchitecture.view.tdm to javafx.base;
 
     exports lk.sasax.layeredarchitecture;
     exports lk.sasax.layeredarchitecture.controller;

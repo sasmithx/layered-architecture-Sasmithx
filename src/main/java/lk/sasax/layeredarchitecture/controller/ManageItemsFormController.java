@@ -3,7 +3,7 @@ package lk.sasax.layeredarchitecture.controller;
 import lk.sasax.layeredarchitecture.bo.BOFactory;
 import lk.sasax.layeredarchitecture.bo.custom.ItemBO;
 import lk.sasax.layeredarchitecture.dto.ItemDTO;
-import lk.sasax.layeredarchitecture.tdm.ItemTM;
+import lk.sasax.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

@@ -5,7 +5,7 @@ import lk.sasax.layeredarchitecture.bo.custom.PlaceOrderBO;
 import lk.sasax.layeredarchitecture.dto.CustomerDTO;
 import lk.sasax.layeredarchitecture.dto.ItemDTO;
 import lk.sasax.layeredarchitecture.dto.OrderDetailDTO;
-import lk.sasax.layeredarchitecture.tdm.OrderDetailTM;
+import lk.sasax.layeredarchitecture.view.tdm.OrderDetailTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
