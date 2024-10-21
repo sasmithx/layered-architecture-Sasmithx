@@ -51,7 +51,7 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/udarasan/layered-architecture.git
+   https://github.com/sasmithx/layered-architecture-Sasmithx.git
    ```
 
 2. Open the project in your IDE.
